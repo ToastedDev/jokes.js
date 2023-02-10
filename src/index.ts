@@ -94,8 +94,12 @@ export async function getJoke(
     type = ["single", "twopart"],
   } = options;
 
-  if (type && !type.some((type) => Object.values(JokeType).includes(type)))
-    throw new SyntaxError("Invalid type specified.");
+  if (type) {
+    if (!type.length)
+      throw new SyntaxError("You must specify at least one type.");
+    if (!type.some((type) => Object.values(JokeType).includes(type)))
+      throw new SyntaxError("Invalid type specified.");
+  }
 
   let endpoint = `https://v2.jokeapi.dev/joke/`;
   const params = new URLSearchParams({
@@ -161,8 +165,12 @@ export async function getJokes(options: JokeOptions): Promise<Jokes> {
   if (amount % 1 != 0) throw new SyntaxError("Amount must be a whole number.");
   if (amount < 0) throw new SyntaxError("Amount must be greater than zero.");
 
-  if (type && !type.some((type) => Object.values(JokeType).includes(type)))
-    throw new SyntaxError("Invalid type specified.");
+  if (type) {
+    if (!type.length)
+      throw new SyntaxError("You must specify at least one type.");
+    if (!type.some((type) => Object.values(JokeType).includes(type)))
+      throw new SyntaxError("Invalid type specified.");
+  }
 
   let endpoint = `https://v2.jokeapi.dev/joke/`;
   const params = new URLSearchParams({
