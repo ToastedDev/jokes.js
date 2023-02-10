@@ -46,18 +46,30 @@ export interface JokeOptions {
   amount: number;
 }
 
-type Joke =
-  | {
-      category: JokeCategory;
-      type: "single";
-      joke: string;
-    }
-  | {
-      category: JokeCategory;
-      type: "twopart";
-      setup: string;
-      delivery: string;
-    };
+type SingleJoke = {
+  category: JokeCategory;
+  type: "single";
+  joke: string;
+};
+
+type TwoPartJoke = {
+  category: JokeCategory;
+  type: "twopart";
+  setup: string;
+  delivery: string;
+};
+
+type Joke = SingleJoke | TwoPartJoke;
+
+export function isSingleJoke(joke: Joke): joke is SingleJoke {
+  if (joke.type === "single") return true;
+  else return false;
+}
+
+export function isTwoPartJoke(joke: Joke): joke is TwoPartJoke {
+  if (joke.type === "twopart") return true;
+  else return false;
+}
 
 export async function getJoke(
   options: Omit<JokeOptions, "amount">
